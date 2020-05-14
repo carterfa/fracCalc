@@ -6,37 +6,37 @@ public class FractionCalculatorAdvanced {
     public static void main(String[] args) {
         System.out.println("\\\\\\Welcome to Fraction Calculator/// \n This program can add, subtract, multiply, and divide fractions. Type Q to quit. \nPlease enter your fractions in the form 'a/b', where a and b are integers.");
         Scanner input = new Scanner(System.in);
-        while (true) {
+        boolean calcActive = true;
+        while (calcActive) {
             String[] exp = getExpression(input);
 
             if (exp[0].equals("q")) {
-                break;
-            }
+                calcActive = false;
+            } else {
+                boolean validExp = true;
+                while (validExp) {
+                    String o = exp[1];
+                    String aStr = exp[0];
+                    String bStr = exp[2];
 
-            while (true) {
-                String o = exp[1];
-                String aStr = exp[0];
-                String bStr = exp[2];
+                    if (validExpression(o, aStr, bStr)) {
 
-                if (!validOperation(o) || !validFraction(aStr) || !validFraction(bStr)) {
-                    break;
+                        Fraction a = getFraction(aStr);
+                        Fraction b = getFraction(bStr);
+
+                        String result = getResult(a, b, o);
+
+                        System.out.println(aStr + " " + o + " " + bStr + " = " + result);
+                        break;
+                    } else {
+                        validExp = false;
+                    }
+
                 }
-
-                Fraction a = getFraction(exp[0]);
-                Fraction b = getFraction(exp[2]);
-
-                if (o.equals("/") && b.getNumerator() == 0) {
-                    System.out.println("You can't divide by zero!");
-                    break;
-                }
-
-                String result = getResult(a, b, o);
-
-                System.out.println(aStr + " " + o + " " + bStr + " = " + result);
-                break;
             }
         }
     }
+
 
     public static String[] getExpression(Scanner input) {
         while (true) {
@@ -52,9 +52,27 @@ public class FractionCalculatorAdvanced {
             if (exp.length == 3) {
                 return exp;
             }
-
             System.out.println("Not a valid expression");
         }
+    }
+
+    public static boolean validExpression(String o, String aStr, String bStr) {
+        if (validOperation(o) && validFraction(aStr) && validFraction(bStr)) {
+            Fraction b = getFraction(bStr);
+            return !divideByZero(o, b);
+        } else {
+            return false;
+        }
+
+    }
+
+    public static boolean divideByZero(String o, Fraction b) {
+
+        if (o.equals("/") && b.getNumerator() == 0) {
+            System.out.println("You can't divide by zero.");
+            return true;
+        }
+        return false;
     }
 
     public static boolean validOperation(String input) {

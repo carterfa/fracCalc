@@ -19,11 +19,9 @@ public class FractionCalculator {
                 b = getFraction(input);
             }
 
-            String aStr = a.toString();
-            String bStr = b.toString();
             String result = getResult(a, b, o);
 
-            System.out.println(aStr+" "+o+" "+bStr+" = " +result);
+            System.out.println(a.toString()+" "+o+" "+b.toString()+" = " +result);
         }
     }
 
