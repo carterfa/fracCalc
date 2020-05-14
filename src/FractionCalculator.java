@@ -8,50 +8,21 @@ public class FractionCalculator {
         Scanner input = new Scanner(System.in);
         while (true){
             String o = getOperation(input);
+
             if (o.equals("q")){break;}
+
             Fraction a = getFraction(input);
             Fraction b = getFraction(input);
+
             if (o.equals("/") && b.getNumerator() == 0){
                 System.out.println("You can't divide by zero!");
                 b = getFraction(input);
             }
+
             String aStr = a.toString();
             String bStr = b.toString();
-            String result = "";
+            String result = getResult(a, b, o);
 
-            switch (o) {
-                case "+" -> {
-                    Fraction r = a.add(b);
-                    r.toLowestTerms();
-                    result = r.toString();
-                    break;
-                }
-                case "-" -> {
-                    Fraction r = a.subtract(b);
-                    r.toLowestTerms();
-                    result = r.toString();
-                    break;
-                }
-                case "*" -> {
-                    Fraction r = a.multiply(b);
-                    r.toLowestTerms();
-                    result = r.toString();
-                    break;
-                }
-                case "/" -> {
-                    Fraction r = a.divide(b);
-                    r.toLowestTerms();
-                    result = r.toString();
-                    break;
-                }
-                case "=" -> {
-                    boolean r = a.equals(b);
-                    result = Boolean.toString(r);
-                    break;
-                }
-                default -> System.out.println("Operation not recognized.");
-
-            }
             System.out.println(aStr+" "+o+" "+bStr+" = " +result);
         }
     }
@@ -67,9 +38,38 @@ public class FractionCalculator {
             }
         }
 
-        public static void parseEquation(String str){
+    public static String getResult(Fraction a, Fraction b, String o){
+        String result = "";
+        switch (o) {
+            case "+" -> {
+                Fraction r = a.add(b);
+                r.toLowestTerms();
+                result = r.toString();
+            }
+            case "-" -> {
+                Fraction r = a.subtract(b);
+                r.toLowestTerms();
+                result = r.toString();
+            }
+            case "*" -> {
+                Fraction r = a.multiply(b);
+                r.toLowestTerms();
+                result = r.toString();
+            }
+            case "/" -> {
+                Fraction r = a.divide(b);
+                r.toLowestTerms();
+                result = r.toString();
+            }
+            case "=" -> {
+                boolean r = a.equals(b);
+                result = Boolean.toString(r);
+            }
+            default -> System.out.println("Operation not recognized.");
 
         }
+        return result;
+    }
 
         public static boolean validFraction(String input){
 

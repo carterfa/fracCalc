@@ -36,13 +36,14 @@ public class Fraction {
     }
 
     public String toString() {
-        toLowestTerms();
+
         if (denominator == 1) {
             return Integer.toString(numerator);
         }
         if (numerator == 0) {
             return Integer.toString(numerator);
         }
+
         return numerator + "/" + denominator;
     }
 
@@ -54,31 +55,24 @@ public class Fraction {
 
     public Fraction add(Fraction other) {
 
-        int den = denominator;
+        int numA = this.numerator * other.denominator;
+        int numB = other.numerator * this.denominator;
+        int den = other.denominator * this.denominator;
 
-        this.denominator *= other.denominator;
-        this.numerator *= other.denominator;
+        int sum = numA + numB;
 
-        other.denominator *= den;
-        other.numerator *= den;
-
-        int sum = this.numerator + other.numerator;
-
-        return new Fraction(sum, this.denominator);
+        return new Fraction(sum, den);
     }
 
     public Fraction subtract(Fraction other) {
-        int den = this.denominator;
 
-        this.denominator *= other.denominator;
-        this.numerator *= other.denominator;
+        int numA = this.numerator * other.denominator;
+        int numB = other.numerator * this.denominator;
+        int den = other.denominator * this.denominator;
 
-        other.denominator *= den;
-        other.numerator *= den;
+        int diff = numA - numB;
 
-        int diff = this.numerator - other.numerator;
-        System.out.println(diff);
-        return new Fraction(diff, this.denominator);
+        return new Fraction(diff, den);
     }
 
     public Fraction multiply(Fraction other) {
@@ -102,11 +96,7 @@ public class Fraction {
 
     public boolean equals(Object other) {
         Fraction otherFrac = (Fraction) other;
-        this.toLowestTerms();
-        otherFrac.toLowestTerms();
-        System.out.println(this.numerator+"");
-        System.out.println(otherFrac.numerator+"");
-        return (this.numerator == otherFrac.numerator && this.denominator == otherFrac.denominator);
+        return (this.toDouble() == otherFrac.toDouble());
     }
 
     public void toLowestTerms() {
